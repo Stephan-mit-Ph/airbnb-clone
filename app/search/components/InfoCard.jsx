@@ -1,11 +1,8 @@
 "use client";
-
 import { useState } from "react";
 import { HeartIcon } from "@heroicons/react/24/outline";
-import {
-  HeartIcon as FilledHeartIcon,
-  StarIcon,
-} from "@heroicons/react/24/solid";
+import { HeartIcon as FilledHeartIcon } from "@heroicons/react/24/solid";
+import { StarIcon } from "@heroicons/react/24/solid";
 
 const InfoCard = ({ listing }) => {
   const [isFavorite, setIsFavorite] = useState(false);
@@ -31,13 +28,13 @@ const InfoCard = ({ listing }) => {
         </div>
         <p className="text-gray-600 mb-4">{listing.description}</p>
         <button
-          className="absolute bottom-4 right-4 p-2 z-30"
           onClick={handleFavoriteUpdate}
+          className="absolute bottom-4 right-4 p-2 z-30"
         >
           {isFavorite ? (
-            <FilledHeartIcon className="h-5 w-5 text-primary" />
+            <FilledHeartIcon className="w-5 h-5 text-primary" />
           ) : (
-            <HeartIcon className="h-5 w-5 text-primary" />
+            <HeartIcon className="w-5 h-5 text-primary" />
           )}
         </button>
       </div>
