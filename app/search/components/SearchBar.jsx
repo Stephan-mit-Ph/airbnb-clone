@@ -6,25 +6,28 @@ import { MagnifyingGlassIcon } from "@heroicons/react/24/solid";
 import { useState } from "react";
 import { DateRangePicker } from "react-date-range";
 import { Counter } from "../components/Counter";
+import { useSearchStore } from "@/store";
 
 const SearchBar = () => {
   const [isSearchFocused, setIsSearchFocused] = useState(false);
-  const [startDate, setStartDate] = useState(new Date());
-  const [endDate, setEndDate] = useState(null);
+  const locationInput = useSearchStore((state) => state.location);
+  const startDate = useSearchStore((state) => state.dates[0]);
+  const endDate = useSearchStore((state) => state.dates[1]);
 
   const handleSelect = (ranges) => {
-    if (ranges.selection.startDate !== startDate) {
-      setStartDate(ranges.selection.startDate);
-    }
-    if (ranges.selection.endDate !== endDate) {
-      setEndDate(ranges.selection.endDate);
-    }
+    useSearchStore.setState({
+      dates: [ranges.selection.startDate, ranges.selection.endDate],
+    });
   };
 
   const selectionRange = {
     startDate: startDate,
     endDate: endDate,
     key: "selection",
+  };
+
+  const handleLocationUpdate = (e) => {
+    useSearchStore.setState({ location: e.target.value });
   };
 
   return (
@@ -37,6 +40,8 @@ const SearchBar = () => {
         {isSearchFocused ? (
           <input
             type="text"
+            onChange={handleLocationUpdate}
+            value={locationInput}
             placeholder="Search destinations"
             className="text-slate-800 bg-transparent border-none outline-none"
           />
@@ -68,7 +73,7 @@ const SearchBar = () => {
         </label>
         <div
           tabIndex={2}
-          className="dropdown-content menu p-2 shadow bg-base-100 rounded-box w-52"
+          className="dropdown-content menu p-2 shadow bg-white rounded-box w-52"
         >
           <Counter label="Adults" />
         </div>
