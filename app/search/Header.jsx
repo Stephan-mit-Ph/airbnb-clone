@@ -10,6 +10,7 @@ import { motion } from "framer-motion";
 import { useSearchStore, initialState } from "@/store";
 
 import SearchBar from "./components/SearchBar.jsx";
+import MobileNav from "./components/MobileNav.jsx";
 
 export default function Header() {
   const [isExpanded, setIsExpanded] = useState(false);
@@ -125,10 +126,10 @@ export default function Header() {
     <>
       <header ref={ref} className="flex border-b bg-white z-50 fixed w-full">
         <div className={headerContainerClasses}>
-          <div className="text-red-500">
+          <div className="text-red-500 hidden md:flex">
             <Image src="/images/logo.png" height={50} width={172} alt="Logo" />
           </div>
-          <div className="flex flex-col grow">
+          <div className="hidden md:flex flex-col grow">
             <motion.div
               className="flex flex-col justify-center"
               variants={tabVariants}
@@ -170,6 +171,9 @@ export default function Header() {
                 <MagnifyingGlassIcon className="h-4 w-5 text-white absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2" />
               </div>
             </motion.button>
+          </div>
+          <div className="md:hidden flex-grow">
+            <MobileNav />
           </div>
           <div className={userIconClasses}>
             <Image src="/images/user.svg" height={30} width={30} alt="User" />
